@@ -1,7 +1,7 @@
 <template>
   <div id="main-app" class="container">
     <div class="row justify-content-center">
-      <appointment-list :appointments="appointments" @remove="removeItem" />
+      <appointment-list :appointments="appointments" @remove="removeItem" @edit="editItem" />
     </div>
   </div>
 </template>
@@ -33,6 +33,10 @@ export default {
   methods: {
     removeItem: function(apt) {
       this.appointments = _.without(this.appointments, apt);
+    },
+    editItem: function(id, field, content) {
+      const aptIndex = _.findIndex(this.appointments, { aptId: id });
+      this.appointments[aptIndex][field] = content;
     }
   }
 }
