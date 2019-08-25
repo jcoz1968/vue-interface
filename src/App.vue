@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <add-appointment @add="addItem" />
       <search-appointment @searchRecords="searchAppointments" />
-      <appointment-list :appointments="searchedApts" @remove="removeItem" @edit="editItem" />
+      <appointment-list :appointments="filteredApts" @remove="removeItem" @edit="editItem" />
     </div>
   </div>
 </template>
@@ -21,7 +21,9 @@ export default {
     return {
       appointments: [],
       aptIndex: 0,
-      searchTerms: ""
+      searchTerms: "",
+      filterKey: "petName",
+      filterDir: "asc"
     }
   },
   components: {
@@ -38,15 +40,20 @@ export default {
     })));
   },
   computed: {
-searchedApts: function() {
-  return this.appointments.filter(item => {
-    return(
-      item.petName.toLowerCase().match(this.searchTerms.toLowerCase()) ||
-      item.petOwner.toLowerCase().match(this.searchTerms.toLowerCase()) ||
-      item.aptNotes.toLowerCase().match(this.searchTerms.toLowerCase()) 
-    );
-  });
-}
+    searchedApts: function() {
+      return this.appointments.filter(item => {
+          return(
+            item.petName.toLowerCase().match(this.searchTerms.toLowerCase()) ||
+            item.petOwner.toLowerCase().match(this.searchTerms.toLowerCase()) ||
+            item.aptNotes.toLowerCase().match(this.searchTerms.toLowerCase()) 
+          );
+      }); 
+    },
+    filteredApts: function() {
+      return _.orderBy(this.searchedApts, item => {
+        return item[this.filterKey].toLowerCase();
+      }, this.filterDir);
+    }
   },
   methods: {
     removeItem: function(apt) {
