@@ -1,7 +1,7 @@
 <template>
   <div id="main-app" class="container">
     <div class="row justify-content-center">
-      <add-appointment />
+      <add-appointment @add="addItem" />
       <appointment-list :appointments="appointments" @remove="removeItem" @edit="editItem" />
     </div>
   </div>
@@ -40,6 +40,11 @@ export default {
     editItem: function(id, field, content) {
       const aptIndex = _.findIndex(this.appointments, { aptId: id });
       this.appointments[aptIndex][field] = content;
+    },
+    addItem: function(apt) {
+      apt.aptId = this.aptIndex;
+      this.aptIndex++;
+      this.appointments.push(apt);
     }
   }
 }

@@ -82,11 +82,14 @@
     methods: {
       requestAdd: function() {
         this.formData = {
-          petName = this.formData.petName,
-          petOwner = this.formData.petOwner,
-          aptNotes = this.formData.aptNotes,
-          aptDate = this.formData.aptDate + ' ' + this.formData.aptTime
-        }
+          petName: this.formData.petName,
+          petOwner: this.formData.petOwner,
+          aptNotes: this.formData.aptNotes,
+          aptDate: this.formData.aptDate + ' ' + this.formData.aptTime
+        };
+        this.$emit('add', this.formData);
+        this.formData = [];
+        this.hidepanel = true;
       }
     }
   }
