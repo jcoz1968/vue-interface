@@ -2,6 +2,7 @@
   <div id="main-app" class="container">
     <div class="row justify-content-center">
       <add-appointment @add="addItem" />
+      <search-appointment />
       <appointment-list :appointments="appointments" @remove="removeItem" @edit="editItem" />
     </div>
   </div>
@@ -10,6 +11,7 @@
 <script>
 import AppointmentList from './components/AppointmentList';
 import AddAppointment from './components/AddAppointment';
+import SearchAppointment from './components/SearchAppointment'
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -23,7 +25,8 @@ export default {
   },
   components: {
     AppointmentList,
-    AddAppointment
+    AddAppointment,
+    SearchAppointment
   },
   mounted() {
     axios.get('./data/appointments.json')
